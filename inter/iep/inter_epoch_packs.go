@@ -1,8 +1,8 @@
 package iep
 
 import (
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/inter/ier"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/inter/ier"
 )
 
 type LlrEpochPack struct {

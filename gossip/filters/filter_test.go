@@ -34,7 +34,7 @@ import (
 	"github.com/ethereum/go-ethereum/params"
 	"github.com/syndtr/goleveldb/leveldb/opt"
 
-	"github.com/Fantom-foundation/go-opera/topicsdb"
+	"github.com/Nova-foundation/go-nova/topicsdb"
 )
 
 func testConfig() Config {

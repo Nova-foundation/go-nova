@@ -10,7 +10,7 @@ import (
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/rpc"
 
-	"github.com/Fantom-foundation/go-opera/inter"
+	"github.com/Nova-foundation/go-nova/inter"
 )
 
 // PublicDAGChainAPI provides an API to access the directed acyclic graph chain.

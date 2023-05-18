@@ -6,27 +6,27 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 
-	"github.com/Fantom-foundation/go-opera/gossip/emitter"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/inter/ibr"
-	"github.com/Fantom-foundation/go-opera/inter/iep"
+	"github.com/Nova-foundation/go-nova/gossip/emitter"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/inter/ibr"
+	"github.com/Nova-foundation/go-nova/inter/iep"
 )
 
 // Constants to match up protocol versions and messages
 const (
-	FTM62           = 62
-	FTM63           = 63
-	ProtocolVersion = FTM63
+	NVT62           = 62
+	NVT63           = 63
+	ProtocolVersion = NVT63
 )
 
 // ProtocolName is the official short name of the protocol used during capability negotiation.
-const ProtocolName = "opera"
+const ProtocolName = "nova"
 
 // ProtocolVersions are the supported versions of the protocol (first is primary).
-var ProtocolVersions = []uint{FTM62, FTM63}
+var ProtocolVersions = []uint{NVT62, NVT63}
 
 // protocolLengths are the number of implemented message corresponding to different protocol versions.
-var protocolLengths = map[uint]uint64{FTM62: EventsStreamResponse + 1, FTM63: EPsStreamResponse + 1}
+var protocolLengths = map[uint]uint64{NVT62: EventsStreamResponse + 1, NVT63: EPsStreamResponse + 1}
 
 const protocolMaxMsgSize = inter.ProtocolMaxMsgSize // Maximum cap on the size of a protocol message
 

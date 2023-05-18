@@ -14,24 +14,24 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 
-	"github.com/Fantom-foundation/go-opera/evmcore"
-	"github.com/Fantom-foundation/go-opera/integration/makegenesis"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/inter/drivertype"
-	"github.com/Fantom-foundation/go-opera/inter/iblockproc"
-	"github.com/Fantom-foundation/go-opera/inter/ier"
-	"github.com/Fantom-foundation/go-opera/inter/validatorpk"
-	"github.com/Fantom-foundation/go-opera/opera"
-	"github.com/Fantom-foundation/go-opera/opera/contracts/driver"
-	"github.com/Fantom-foundation/go-opera/opera/contracts/driver/drivercall"
-	"github.com/Fantom-foundation/go-opera/opera/contracts/driverauth"
-	"github.com/Fantom-foundation/go-opera/opera/contracts/evmwriter"
-	"github.com/Fantom-foundation/go-opera/opera/contracts/netinit"
-	netinitcall "github.com/Fantom-foundation/go-opera/opera/contracts/netinit/netinitcalls"
-	"github.com/Fantom-foundation/go-opera/opera/contracts/sfc"
-	"github.com/Fantom-foundation/go-opera/opera/genesis"
-	"github.com/Fantom-foundation/go-opera/opera/genesis/gpos"
-	"github.com/Fantom-foundation/go-opera/opera/genesisstore"
+	"github.com/Nova-foundation/go-nova/evmcore"
+	"github.com/Nova-foundation/go-nova/integration/makegenesis"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/inter/drivertype"
+	"github.com/Nova-foundation/go-nova/inter/iblockproc"
+	"github.com/Nova-foundation/go-nova/inter/ier"
+	"github.com/Nova-foundation/go-nova/inter/validatorpk"
+	"github.com/Nova-foundation/go-nova/nova"
+	"github.com/Nova-foundation/go-nova/nova/contracts/driver"
+	"github.com/Nova-foundation/go-nova/nova/contracts/driver/drivercall"
+	"github.com/Nova-foundation/go-nova/nova/contracts/driverauth"
+	"github.com/Nova-foundation/go-nova/nova/contracts/evmwriter"
+	"github.com/Nova-foundation/go-nova/nova/contracts/netinit"
+	netinitcall "github.com/Nova-foundation/go-nova/nova/contracts/netinit/netinitcalls"
+	"github.com/Nova-foundation/go-nova/nova/contracts/sfc"
+	"github.com/Nova-foundation/go-nova/nova/genesis"
+	"github.com/Nova-foundation/go-nova/nova/genesis/gpos"
+	"github.com/Nova-foundation/go-nova/nova/genesisstore"
 )
 
 var (
@@ -44,14 +44,14 @@ func FakeKey(n idx.ValidatorID) *ecdsa.PrivateKey {
 }
 
 func FakeGenesisStore(num idx.Validator, balance, stake *big.Int) *genesisstore.Store {
-	return FakeGenesisStoreWithRules(num, balance, stake, opera.FakeNetRules())
+	return FakeGenesisStoreWithRules(num, balance, stake, nova.FakeNetRules())
 }
 
-func FakeGenesisStoreWithRules(num idx.Validator, balance, stake *big.Int, rules opera.Rules) *genesisstore.Store {
+func FakeGenesisStoreWithRules(num idx.Validator, balance, stake *big.Int, rules nova.Rules) *genesisstore.Store {
 	return FakeGenesisStoreWithRulesAndStart(num, balance, stake, rules, 2, 1)
 }
 
-func FakeGenesisStoreWithRulesAndStart(num idx.Validator, balance, stake *big.Int, rules opera.Rules, epoch idx.Epoch, block idx.Block) *genesisstore.Store {
+func FakeGenesisStoreWithRulesAndStart(num idx.Validator, balance, stake *big.Int, rules nova.Rules, epoch idx.Epoch, block idx.Block) *genesisstore.Store {
 	builder := makegenesis.NewGenesisBuilder(memorydb.NewProducer(""))
 
 	validators := GetFakeValidators(num)

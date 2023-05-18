@@ -39,9 +39,9 @@ var (
 	// a peer set, but no peer with the given id exists.
 	errPeerNotRegistered = errors.New("peer not registered")
 
-	// errSnapWithoutOpera is returned if a peer attempts to connect only on the
-	// snap protocol without advertizing the opera main protocol.
-	errSnapWithoutOpera = errors.New("peer connected on snap without compatible opera support")
+	// errSnapWithoutNova is returned if a peer attempts to connect only on the
+	// snap protocol without advertizing the nova main protocol.
+	errSnapWithoutNova = errors.New("peer connected on snap without compatible nova support")
 )
 
 // peerSet represents the collection of active peers currently participating in
@@ -72,7 +72,7 @@ func newPeerSet() *peerSet {
 func (ps *peerSet) RegisterSnapExtension(peer *snap.Peer) error {
 	// Reject the peer if it is not eligible for a snap protocol
 	if !eligibleForSnap(peer.Peer) {
-		return errSnapWithoutOpera
+		return errSnapWithoutNova
 	}
 	// Ensure nobody can double connect
 	ps.lock.Lock()

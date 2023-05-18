@@ -1,12 +1,12 @@
 package gossip
 
 // compile SFC with truffle
-//go:generate bash -c "cd ../../opera-sfc && git checkout c1d33c81f74abf82c0e22807f16e609578e10ad8"
-//go:generate bash -c "docker run --name go-opera-sfc-compiler -v $(pwd)/contract/solc:/src/build/contracts -v $(pwd)/../../opera-sfc:/src -w /src node:10.5.0 bash -c 'export NPM_CONFIG_PREFIX=~; npm install --no-save; npm install --no-save truffle@5.1.4' && docker commit go-opera-sfc-compiler go-opera-sfc-compiler-image && docker rm go-opera-sfc-compiler"
-//go:generate bash -c "docker run --rm -v $(pwd)/contract/solc:/src/build/contracts -v $(pwd)/../../opera-sfc:/src -w /src go-opera-sfc-compiler-image bash -c 'export NPM_CONFIG_PREFIX=~; rm -f /src/build/contracts/*json; npm run build'"
+//go:generate bash -c "cd ../../nova-sfc && git checkout c1d33c81f74abf82c0e22807f16e609578e10ad8"
+//go:generate bash -c "docker run --name go-nova-sfc-compiler -v $(pwd)/contract/solc:/src/build/contracts -v $(pwd)/../../nova-sfc:/src -w /src node:10.5.0 bash -c 'export NPM_CONFIG_PREFIX=~; npm install --no-save; npm install --no-save truffle@5.1.4' && docker commit go-nova-sfc-compiler go-nova-sfc-compiler-image && docker rm go-nova-sfc-compiler"
+//go:generate bash -c "docker run --rm -v $(pwd)/contract/solc:/src/build/contracts -v $(pwd)/../../nova-sfc:/src -w /src go-nova-sfc-compiler-image bash -c 'export NPM_CONFIG_PREFIX=~; rm -f /src/build/contracts/*json; npm run build'"
 //go:generate bash -c "cd ./contract/solc && for f in LegacySfcWrapper.json; do jq -j .bytecode $DOLLAR{f} > $DOLLAR{f%.json}.bin; jq -j .deployedBytecode $DOLLAR{f} > $DOLLAR{f%.json}.bin-runtime; jq -c .abi $DOLLAR{f} > $DOLLAR{f%.json}.abi; done"
-//go:generate bash -c "docker run --rm -v $(pwd)/contract/solc:/src/build/contracts -v $(pwd)/../../opera-sfc:/src -w /src go-opera-sfc-compiler-image bash -c 'export NPM_CONFIG_PREFIX=~; sed -i s/runs:\\ 200,/runs:\\ 10000,/ /src/truffle-config.js; rm -f /src/build/contracts/*json; npm run build'"
-//go:generate bash -c "cd ../../opera-sfc && git checkout -- truffle-config.js; docker rmi go-opera-sfc-compiler-image"
+//go:generate bash -c "docker run --rm -v $(pwd)/contract/solc:/src/build/contracts -v $(pwd)/../../nova-sfc:/src -w /src go-nova-sfc-compiler-image bash -c 'export NPM_CONFIG_PREFIX=~; sed -i s/runs:\\ 200,/runs:\\ 10000,/ /src/truffle-config.js; rm -f /src/build/contracts/*json; npm run build'"
+//go:generate bash -c "cd ../../nova-sfc && git checkout -- truffle-config.js; docker rmi go-nova-sfc-compiler-image"
 //go:generate bash -c "cd ./contract/solc && for f in NetworkInitializer.json NodeDriver.json NodeDriverAuth.json; do jq -j .bytecode $DOLLAR{f} > $DOLLAR{f%.json}.bin; jq -j .deployedBytecode $DOLLAR{f} > $DOLLAR{f%.json}.bin-runtime; jq -c .abi $DOLLAR{f} > $DOLLAR{f%.json}.abi; done"
 
 // wrap LegacySfcWrapper with golang
@@ -36,17 +36,17 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/Fantom-foundation/go-opera/gossip/contract/driver100"
-	"github.com/Fantom-foundation/go-opera/gossip/contract/driverauth100"
-	"github.com/Fantom-foundation/go-opera/gossip/contract/netinit100"
-	"github.com/Fantom-foundation/go-opera/gossip/contract/sfc100"
-	"github.com/Fantom-foundation/go-opera/logger"
-	"github.com/Fantom-foundation/go-opera/opera/contracts/driver"
-	"github.com/Fantom-foundation/go-opera/opera/contracts/driverauth"
-	"github.com/Fantom-foundation/go-opera/opera/contracts/evmwriter"
-	"github.com/Fantom-foundation/go-opera/opera/contracts/netinit"
-	"github.com/Fantom-foundation/go-opera/opera/contracts/sfc"
-	"github.com/Fantom-foundation/go-opera/utils"
+	"github.com/Nova-foundation/go-nova/gossip/contract/driver100"
+	"github.com/Nova-foundation/go-nova/gossip/contract/driverauth100"
+	"github.com/Nova-foundation/go-nova/gossip/contract/netinit100"
+	"github.com/Nova-foundation/go-nova/gossip/contract/sfc100"
+	"github.com/Nova-foundation/go-nova/logger"
+	"github.com/Nova-foundation/go-nova/nova/contracts/driver"
+	"github.com/Nova-foundation/go-nova/nova/contracts/driverauth"
+	"github.com/Nova-foundation/go-nova/nova/contracts/evmwriter"
+	"github.com/Nova-foundation/go-nova/nova/contracts/netinit"
+	"github.com/Nova-foundation/go-nova/nova/contracts/sfc"
+	"github.com/Nova-foundation/go-nova/utils"
 )
 
 func TestSFC(t *testing.T) {
@@ -133,7 +133,7 @@ func TestSFC(t *testing.T) {
 
 			// create new
 			rr, err := env.ApplyTxs(nextEpoch,
-				env.Contract(admin, utils.ToFtm(0), sfc100.ContractBin),
+				env.Contract(admin, utils.ToNvt(0), sfc100.ContractBin),
 			)
 			require.NoError(err)
 			require.Equal(1, rr.Len())
@@ -167,7 +167,7 @@ func TestSFC(t *testing.T) {
 		// create new
 		anyContractBin := driver100.ContractBin
 		rr, err := env.ApplyTxs(nextEpoch,
-			env.Contract(admin, utils.ToFtm(0), anyContractBin),
+			env.Contract(admin, utils.ToNvt(0), anyContractBin),
 		)
 		require.NoError(err)
 		require.Equal(1, rr.Len())
@@ -200,7 +200,7 @@ func circleTransfers(t *testing.T, env *testEnv, count uint64) {
 		for i := idx.Validator(0); i < validatorsNum; i++ {
 			from := (i) % validatorsNum
 			to := (i + 1) % validatorsNum
-			txs[i] = env.Transfer(idx.ValidatorID(from+1), idx.ValidatorID(to+1), utils.ToFtm(100))
+			txs[i] = env.Transfer(idx.ValidatorID(from+1), idx.ValidatorID(to+1), utils.ToNvt(100))
 		}
 
 		rr, err := env.ApplyTxs(sameEpoch, txs...)

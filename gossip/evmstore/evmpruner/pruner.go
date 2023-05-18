@@ -37,7 +37,7 @@ import (
 	"github.com/ethereum/go-ethereum/rlp"
 	"github.com/ethereum/go-ethereum/trie"
 
-	"github.com/Fantom-foundation/go-opera/gossip/evmstore"
+	"github.com/Nova-foundation/go-nova/gossip/evmstore"
 )
 
 const (

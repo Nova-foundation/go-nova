@@ -11,21 +11,21 @@ import (
 	"github.com/Fantom-foundation/lachesis-base/utils/cachescale"
 	"github.com/ethereum/go-ethereum/common"
 
-	"github.com/Fantom-foundation/go-opera/gossip"
-	"github.com/Fantom-foundation/go-opera/integration/makefakegenesis"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/utils"
-	"github.com/Fantom-foundation/go-opera/vecmt"
+	"github.com/Nova-foundation/go-nova/gossip"
+	"github.com/Nova-foundation/go-nova/integration/makefakegenesis"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/utils"
+	"github.com/Nova-foundation/go-nova/vecmt"
 )
 
 func BenchmarkFlushDBs(b *testing.B) {
 	dir := tmpDir("flush_bench")
 	defer os.RemoveAll(dir)
-	genStore := makefakegenesis.FakeGenesisStore(1, utils.ToFtm(1), utils.ToFtm(1))
+	genStore := makefakegenesis.FakeGenesisStore(1, utils.ToNvt(1), utils.ToNvt(1))
 	g := genStore.Genesis()
 	_, _, store, s2, _, closeDBs := MakeEngine(dir, &g, Configs{
-		Opera:         gossip.DefaultConfig(cachescale.Identity),
-		OperaStore:    gossip.DefaultStoreConfig(cachescale.Identity),
+		Nova:          gossip.DefaultConfig(cachescale.Identity),
+		NovaStore:     gossip.DefaultStoreConfig(cachescale.Identity),
 		Lachesis:      abft.DefaultConfig(),
 		LachesisStore: abft.DefaultStoreConfig(cachescale.Identity),
 		VectorClock:   vecmt.DefaultConfig(cachescale.Identity),

@@ -9,8 +9,8 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/Fantom-foundation/go-opera/logger"
-	"github.com/Fantom-foundation/go-opera/utils"
+	"github.com/Nova-foundation/go-nova/logger"
+	"github.com/Nova-foundation/go-nova/utils"
 )
 
 func TestConsensusCallback(t *testing.T) {

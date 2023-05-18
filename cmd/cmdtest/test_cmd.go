@@ -55,7 +55,7 @@ type TestCmd struct {
 }
 
 // Run exec's the current binary using name as argv[0] which will trigger the
-// reexec init function for that name (e.g. "opera-test" in cmd/run_test.go)
+// reexec init function for that name (e.g. "nova-test" in cmd/run_test.go)
 func (tt *TestCmd) Run(name string, args ...string) {
 	tt.stderr = &testlogger{t: tt.T}
 	tt.cmd = &exec.Cmd{
@@ -79,7 +79,7 @@ func (tt *TestCmd) Run(name string, args ...string) {
 // InputLine writes the given text to the childs stdin.
 // This method can also be called from an expect template, e.g.:
 //
-//     cli.expect(`Passphrase: {{.InputLine "password"}}`)
+//	cli.expect(`Passphrase: {{.InputLine "password"}}`)
 func (tt *TestCmd) InputLine(s string) string {
 	io.WriteString(tt.stdin, s+"\n")
 	return ""

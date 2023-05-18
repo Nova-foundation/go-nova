@@ -10,9 +10,9 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/params"
 
-	"github.com/Fantom-foundation/go-opera/evmcore"
-	"github.com/Fantom-foundation/go-opera/gossip/gasprice"
-	"github.com/Fantom-foundation/go-opera/opera"
+	"github.com/Nova-foundation/go-nova/evmcore"
+	"github.com/Nova-foundation/go-nova/gossip/gasprice"
+	"github.com/Nova-foundation/go-nova/nova"
 )
 
 type EvmStateReader struct {
@@ -111,7 +111,7 @@ func (r *EvmStateReader) getBlock(h hash.Event, n idx.Block, readTxs bool) *evmc
 	// find block rules
 	epoch := block.Atropos.Epoch()
 	es := r.store.GetHistoryEpochState(epoch)
-	var rules opera.Rules
+	var rules nova.Rules
 	if es != nil {
 		rules = es.Rules
 	}

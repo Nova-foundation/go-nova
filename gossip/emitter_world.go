@@ -7,11 +7,11 @@ import (
 	"github.com/Fantom-foundation/lachesis-base/inter/idx"
 	"github.com/ethereum/go-ethereum/core/types"
 
-	"github.com/Fantom-foundation/go-opera/gossip/emitter"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/utils/wgmutex"
-	"github.com/Fantom-foundation/go-opera/valkeystore"
-	"github.com/Fantom-foundation/go-opera/vecmt"
+	"github.com/Nova-foundation/go-nova/gossip/emitter"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/utils/wgmutex"
+	"github.com/Nova-foundation/go-nova/valkeystore"
+	"github.com/Nova-foundation/go-nova/vecmt"
 )
 
 type emitterWorldProc struct {

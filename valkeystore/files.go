@@ -7,8 +7,8 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 
-	"github.com/Fantom-foundation/go-opera/inter/validatorpk"
-	"github.com/Fantom-foundation/go-opera/valkeystore/encryption"
+	"github.com/Nova-foundation/go-nova/inter/validatorpk"
+	"github.com/Nova-foundation/go-nova/valkeystore/encryption"
 )
 
 var (

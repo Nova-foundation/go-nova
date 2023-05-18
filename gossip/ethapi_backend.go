@@ -20,14 +20,14 @@ import (
 	"github.com/ethereum/go-ethereum/rpc"
 	"github.com/pkg/errors"
 
-	"github.com/Fantom-foundation/go-opera/ethapi"
-	"github.com/Fantom-foundation/go-opera/evmcore"
-	"github.com/Fantom-foundation/go-opera/gossip/evmstore"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/inter/iblockproc"
-	"github.com/Fantom-foundation/go-opera/opera"
-	"github.com/Fantom-foundation/go-opera/topicsdb"
-	"github.com/Fantom-foundation/go-opera/tracing"
+	"github.com/Nova-foundation/go-nova/ethapi"
+	"github.com/Nova-foundation/go-nova/evmcore"
+	"github.com/Nova-foundation/go-nova/gossip/evmstore"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/inter/iblockproc"
+	"github.com/Nova-foundation/go-nova/nova"
+	"github.com/Nova-foundation/go-nova/topicsdb"
+	"github.com/Nova-foundation/go-nova/tracing"
 )
 
 // EthAPIBackend implements ethapi.Backend.
@@ -319,7 +319,7 @@ func (b *EthAPIBackend) GetEVM(ctx context.Context, msg evmcore.Message, state *
 	vmError := func() error { return nil }
 
 	if vmConfig == nil {
-		vmConfig = &opera.DefaultVMConfig
+		vmConfig = &nova.DefaultVMConfig
 	}
 	txContext := evmcore.NewEVMTxContext(msg)
 	context := evmcore.NewEVMBlockContext(header, b.state, nil)

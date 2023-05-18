@@ -11,15 +11,15 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/log"
 
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/inter/drivertype"
-	"github.com/Fantom-foundation/go-opera/inter/iblockproc"
-	"github.com/Fantom-foundation/go-opera/inter/validatorpk"
-	"github.com/Fantom-foundation/go-opera/opera"
-	"github.com/Fantom-foundation/go-opera/opera/contracts/driver"
-	"github.com/Fantom-foundation/go-opera/opera/contracts/driver/drivercall"
-	"github.com/Fantom-foundation/go-opera/opera/contracts/driver/driverpos"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/inter/drivertype"
+	"github.com/Nova-foundation/go-nova/inter/iblockproc"
+	"github.com/Nova-foundation/go-nova/inter/validatorpk"
+	"github.com/Nova-foundation/go-nova/nova"
+	"github.com/Nova-foundation/go-nova/nova/contracts/driver"
+	"github.com/Nova-foundation/go-nova/nova/contracts/driver/drivercall"
+	"github.com/Nova-foundation/go-nova/nova/contracts/driver/driverpos"
 )
 
 const (
@@ -95,13 +95,13 @@ func (p *DriverTxPreTransactor) PopInternalTxs(block iblockproc.BlockCtx, bs ibl
 		for oldValIdx := idx.Validator(0); oldValIdx < es.Validators.Len(); oldValIdx++ {
 			info := bs.ValidatorStates[oldValIdx]
 			// forgive downtime if below BlockMissedSlack
-			missed := opera.BlocksMissed{
+			missed := nova.BlocksMissed{
 				BlocksNum: maxBlockIdx(block.Idx, info.LastBlock) - info.LastBlock,
 				Period:    inter.MaxTimestamp(block.Time, info.LastOnlineTime) - info.LastOnlineTime,
 			}
 			uptime := info.Uptime
 			if missed.BlocksNum <= es.Rules.Economy.BlockMissedSlack {
-				missed = opera.BlocksMissed{}
+				missed = nova.BlocksMissed{}
 				prevOnlineTime := inter.MaxTimestamp(info.LastOnlineTime, es.EpochStart)
 				uptime += inter.MaxTimestamp(block.Time, prevOnlineTime) - prevOnlineTime
 			}
@@ -213,7 +213,7 @@ func (p *DriverTxListener) OnNewLog(l *types.Log) {
 		if p.bs.DirtyRules != nil {
 			last = p.bs.DirtyRules
 		}
-		updated, err := opera.UpdateRules(*last, diff)
+		updated, err := nova.UpdateRules(*last, diff)
 		if err != nil {
 			log.Warn("Network rules update error", "err", err)
 			return

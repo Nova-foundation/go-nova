@@ -19,11 +19,11 @@ import (
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/status-im/keycard-go/hexutils"
 
-	"github.com/Fantom-foundation/go-opera/gossip"
-	"github.com/Fantom-foundation/go-opera/opera/genesis"
-	"github.com/Fantom-foundation/go-opera/utils/adapters/vecmt2dagidx"
-	"github.com/Fantom-foundation/go-opera/utils/compactdb"
-	"github.com/Fantom-foundation/go-opera/vecmt"
+	"github.com/Nova-foundation/go-nova/gossip"
+	"github.com/Nova-foundation/go-nova/nova/genesis"
+	"github.com/Nova-foundation/go-nova/utils/adapters/vecmt2dagidx"
+	"github.com/Nova-foundation/go-nova/utils/compactdb"
+	"github.com/Nova-foundation/go-nova/vecmt"
 )
 
 var (
@@ -44,8 +44,8 @@ func (e *GenesisMismatchError) Error() string {
 }
 
 type Configs struct {
-	Opera         gossip.Config
-	OperaStore    gossip.StoreConfig
+	Nova          gossip.Config
+	NovaStore     gossip.StoreConfig
 	Lachesis      abft.Config
 	LachesisStore abft.StoreConfig
 	VectorClock   vecmt.IndexConfig
@@ -67,7 +67,7 @@ func mustOpenDB(producer kvdb.DBProducer, name string) kvdb.Store {
 }
 
 func getStores(producer kvdb.FlushableDBProducer, cfg Configs) (*gossip.Store, *abft.Store) {
-	gdb := gossip.NewStore(producer, cfg.OperaStore)
+	gdb := gossip.NewStore(producer, cfg.NovaStore)
 
 	cMainDb := mustOpenDB(producer, "lachesis")
 	cGetEpochDB := func(epoch idx.Epoch) kvdb.Store {

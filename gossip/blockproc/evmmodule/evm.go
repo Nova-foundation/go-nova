@@ -10,12 +10,12 @@ import (
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/params"
 
-	"github.com/Fantom-foundation/go-opera/evmcore"
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/inter/iblockproc"
-	"github.com/Fantom-foundation/go-opera/opera"
-	"github.com/Fantom-foundation/go-opera/utils"
+	"github.com/Nova-foundation/go-nova/evmcore"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/inter/iblockproc"
+	"github.com/Nova-foundation/go-nova/nova"
+	"github.com/Nova-foundation/go-nova/utils"
 )
 
 type EVMModule struct{}
@@ -24,12 +24,12 @@ func New() *EVMModule {
 	return &EVMModule{}
 }
 
-func (p *EVMModule) Start(block iblockproc.BlockCtx, statedb *state.StateDB, reader evmcore.DummyChain, onNewLog func(*types.Log), net opera.Rules, evmCfg *params.ChainConfig) blockproc.EVMProcessor {
+func (p *EVMModule) Start(block iblockproc.BlockCtx, statedb *state.StateDB, reader evmcore.DummyChain, onNewLog func(*types.Log), net nova.Rules, evmCfg *params.ChainConfig) blockproc.EVMProcessor {
 	var prevBlockHash common.Hash
 	if block.Idx != 0 {
 		prevBlockHash = reader.GetHeader(common.Hash{}, uint64(block.Idx-1)).Hash
 	}
-	return &OperaEVMProcessor{
+	return &NovaEVMProcessor{
 		block:         block,
 		reader:        reader,
 		statedb:       statedb,
@@ -41,12 +41,12 @@ func (p *EVMModule) Start(block iblockproc.BlockCtx, statedb *state.StateDB, rea
 	}
 }
 
-type OperaEVMProcessor struct {
+type NovaEVMProcessor struct {
 	block    iblockproc.BlockCtx
 	reader   evmcore.DummyChain
 	statedb  *state.StateDB
 	onNewLog func(*types.Log)
-	net      opera.Rules
+	net      nova.Rules
 	evmCfg   *params.ChainConfig
 
 	blockIdx      *big.Int
@@ -59,7 +59,7 @@ type OperaEVMProcessor struct {
 	receipts    types.Receipts
 }
 
-func (p *OperaEVMProcessor) evmBlockWith(txs types.Transactions) *evmcore.EvmBlock {
+func (p *NovaEVMProcessor) evmBlockWith(txs types.Transactions) *evmcore.EvmBlock {
 	baseFee := p.net.Economy.MinGasPrice
 	if !p.net.Upgrades.London {
 		baseFee = nil
@@ -79,13 +79,13 @@ func (p *OperaEVMProcessor) evmBlockWith(txs types.Transactions) *evmcore.EvmBlo
 	return evmcore.NewEvmBlock(h, txs)
 }
 
-func (p *OperaEVMProcessor) Execute(txs types.Transactions) types.Receipts {
+func (p *NovaEVMProcessor) Execute(txs types.Transactions) types.Receipts {
 	evmProcessor := evmcore.NewStateProcessor(p.evmCfg, p.reader)
 	txsOffset := uint(len(p.incomingTxs))
 
 	// Process txs
 	evmBlock := p.evmBlockWith(txs)
-	receipts, _, skipped, err := evmProcessor.Process(evmBlock, p.statedb, opera.DefaultVMConfig, &p.gasUsed, func(l *types.Log, _ *state.StateDB) {
+	receipts, _, skipped, err := evmProcessor.Process(evmBlock, p.statedb, nova.DefaultVMConfig, &p.gasUsed, func(l *types.Log, _ *state.StateDB) {
 		// Note: l.Index is properly set before
 		l.TxIndex += txsOffset
 		p.onNewLog(l)
@@ -110,7 +110,7 @@ func (p *OperaEVMProcessor) Execute(txs types.Transactions) types.Receipts {
 	return receipts
 }
 
-func (p *OperaEVMProcessor) Finalize() (evmBlock *evmcore.EvmBlock, skippedTxs []uint32, receipts types.Receipts) {
+func (p *NovaEVMProcessor) Finalize() (evmBlock *evmcore.EvmBlock, skippedTxs []uint32, receipts types.Receipts) {
 	evmBlock = p.evmBlockWith(
 		// Filter skipped transactions. Receipts are filtered already
 		inter.FilterSkippedTxs(p.incomingTxs, p.skippedTxs),

@@ -11,11 +11,11 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	notify "github.com/ethereum/go-ethereum/event"
 
-	"github.com/Fantom-foundation/go-opera/evmcore"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/opera"
-	"github.com/Fantom-foundation/go-opera/valkeystore"
-	"github.com/Fantom-foundation/go-opera/vecmt"
+	"github.com/Nova-foundation/go-nova/evmcore"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/nova"
+	"github.com/Nova-foundation/go-nova/valkeystore"
+	"github.com/Nova-foundation/go-nova/vecmt"
 )
 
 var (
@@ -73,7 +73,7 @@ type Reader interface {
 	GetLastEvent(epoch idx.Epoch, from idx.ValidatorID) *hash.Event
 	GetHeads(idx.Epoch) hash.Events
 	GetGenesisTime() inter.Timestamp
-	GetRules() opera.Rules
+	GetRules() nova.Rules
 }
 
 type TxPool interface {

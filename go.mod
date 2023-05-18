@@ -1,4 +1,4 @@
-module github.com/Fantom-foundation/go-opera
+module github.com/Nova-foundation/go-nova
 
 go 1.14
 

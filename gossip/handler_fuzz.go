@@ -15,12 +15,12 @@ import (
 	"github.com/ethereum/go-ethereum/p2p"
 	"github.com/ethereum/go-ethereum/p2p/enode"
 
-	"github.com/Fantom-foundation/go-opera/evmcore"
-	"github.com/Fantom-foundation/go-opera/integration/makefakegenesis"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/opera"
-	"github.com/Fantom-foundation/go-opera/utils"
-	"github.com/Fantom-foundation/go-opera/utils/signers/gsignercache"
+	"github.com/Nova-foundation/go-nova/evmcore"
+	"github.com/Nova-foundation/go-nova/integration/makefakegenesis"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/nova"
+	"github.com/Nova-foundation/go-nova/utils"
+	"github.com/Nova-foundation/go-nova/utils/signers/gsignercache"
 )
 
 const (
@@ -68,7 +68,7 @@ func makeFuzzedHandler() (h *handler, err error) {
 		genesisStake   = 2 * 4e6
 	)
 
-	genStore := makefakegenesis.FakeGenesisStore(genesisStakers, utils.ToFtm(genesisBalance), utils.ToFtm(genesisStake))
+	genStore := makefakegenesis.FakeGenesisStore(genesisStakers, utils.ToNvt(genesisBalance), utils.ToNvt(genesisStake))
 	genesis := genStore.Genesis()
 
 	config := DefaultConfig(cachescale.Identity)
@@ -79,7 +79,7 @@ func makeFuzzedHandler() (h *handler, err error) {
 	}
 
 	var (
-		network             = opera.FakeNetRules()
+		network             = nova.FakeNetRules()
 		heavyCheckReader    HeavyCheckReader
 		gasPowerCheckReader GasPowerCheckReader
 		// TODO: init

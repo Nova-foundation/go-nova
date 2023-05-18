@@ -12,21 +12,21 @@ import (
 	"github.com/Fantom-foundation/lachesis-base/utils/cachescale"
 	"github.com/syndtr/goleveldb/leveldb/opt"
 
-	"github.com/Fantom-foundation/go-opera/eventcheck/heavycheck"
-	"github.com/Fantom-foundation/go-opera/gossip/evmstore"
-	"github.com/Fantom-foundation/go-opera/gossip/filters"
-	"github.com/Fantom-foundation/go-opera/gossip/gasprice"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/blockrecords/brprocessor"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/blockrecords/brstream/brstreamleecher"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/blockrecords/brstream/brstreamseeder"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/blockvotes/bvprocessor"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/blockvotes/bvstream/bvstreamleecher"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/blockvotes/bvstream/bvstreamseeder"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/dag/dagstream/dagstreamleecher"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/dag/dagstream/dagstreamseeder"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/epochpacks/epprocessor"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/epochpacks/epstream/epstreamleecher"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/epochpacks/epstream/epstreamseeder"
+	"github.com/Nova-foundation/go-nova/eventcheck/heavycheck"
+	"github.com/Nova-foundation/go-nova/gossip/evmstore"
+	"github.com/Nova-foundation/go-nova/gossip/filters"
+	"github.com/Nova-foundation/go-nova/gossip/gasprice"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/blockrecords/brprocessor"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/blockrecords/brstream/brstreamleecher"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/blockrecords/brstream/brstreamseeder"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/blockvotes/bvprocessor"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/blockvotes/bvstream/bvstreamleecher"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/blockvotes/bvstream/bvstreamseeder"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/dag/dagstream/dagstreamleecher"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/dag/dagstream/dagstreamseeder"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/epochpacks/epprocessor"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/epochpacks/epstream/epstreamleecher"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/epochpacks/epstream/epstreamseeder"
 )
 
 const nominalSize uint = 1
@@ -75,8 +75,8 @@ type (
 
 		// This can be set to list of enrtree:// URLs which will be queried for
 		// for nodes to connect to.
-		OperaDiscoveryURLs []string
-		SnapDiscoveryURLs  []string
+		NovaDiscoveryURLs []string
+		SnapDiscoveryURLs []string
 
 		AllowSnapsync bool
 
@@ -214,7 +214,7 @@ func DefaultConfig(scale cachescale.Func) Config {
 		RPCBlockExt: true,
 
 		RPCGasCap:   50000000,
-		RPCTxFeeCap: 100, // 100 FTM
+		RPCTxFeeCap: 100, // 100 NVT
 		RPCTimeout:  5 * time.Second,
 	}
 	sessionCfg := cfg.Protocol.DagStreamLeecher.Session

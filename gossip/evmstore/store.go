@@ -19,11 +19,11 @@ import (
 	"github.com/ethereum/go-ethereum/trie"
 	"github.com/syndtr/goleveldb/leveldb/opt"
 
-	"github.com/Fantom-foundation/go-opera/inter/iblockproc"
-	"github.com/Fantom-foundation/go-opera/logger"
-	"github.com/Fantom-foundation/go-opera/topicsdb"
-	"github.com/Fantom-foundation/go-opera/utils/adapters/kvdb2ethdb"
-	"github.com/Fantom-foundation/go-opera/utils/rlpstore"
+	"github.com/Nova-foundation/go-nova/inter/iblockproc"
+	"github.com/Nova-foundation/go-nova/logger"
+	"github.com/Nova-foundation/go-nova/topicsdb"
+	"github.com/Nova-foundation/go-nova/utils/adapters/kvdb2ethdb"
+	"github.com/Nova-foundation/go-nova/utils/rlpstore"
 )
 
 const nominalSize uint = 1

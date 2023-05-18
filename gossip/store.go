@@ -14,13 +14,13 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/log"
 
-	"github.com/Fantom-foundation/go-opera/gossip/evmstore"
-	"github.com/Fantom-foundation/go-opera/logger"
-	"github.com/Fantom-foundation/go-opera/utils/adapters/snap2kvdb"
-	"github.com/Fantom-foundation/go-opera/utils/eventid"
-	"github.com/Fantom-foundation/go-opera/utils/randat"
-	"github.com/Fantom-foundation/go-opera/utils/rlpstore"
-	"github.com/Fantom-foundation/go-opera/utils/switchable"
+	"github.com/Nova-foundation/go-nova/gossip/evmstore"
+	"github.com/Nova-foundation/go-nova/logger"
+	"github.com/Nova-foundation/go-nova/utils/adapters/snap2kvdb"
+	"github.com/Nova-foundation/go-nova/utils/eventid"
+	"github.com/Nova-foundation/go-nova/utils/randat"
+	"github.com/Nova-foundation/go-nova/utils/rlpstore"
+	"github.com/Nova-foundation/go-nova/utils/switchable"
 )
 
 // Store is a node persistent storage working over physical key-value database.

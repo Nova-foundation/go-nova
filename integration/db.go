@@ -20,8 +20,8 @@ import (
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/metrics"
 
-	"github.com/Fantom-foundation/go-opera/gossip"
-	"github.com/Fantom-foundation/go-opera/utils/dbutil/asyncflushproducer"
+	"github.com/Nova-foundation/go-nova/gossip"
+	"github.com/Nova-foundation/go-nova/utils/dbutil/asyncflushproducer"
 )
 
 type DBsConfig struct {
@@ -42,7 +42,7 @@ type DBsCacheConfig struct {
 
 func SupportedDBs(chaindataDir string, cfg DBsCacheConfig) (map[multidb.TypeName]kvdb.IterableDBProducer, map[multidb.TypeName]kvdb.FullDBProducer) {
 	if chaindataDir == "inmemory" || chaindataDir == "" {
-		chaindataDir, _ = ioutil.TempDir("", "opera-tmp")
+		chaindataDir, _ = ioutil.TempDir("", "nova-tmp")
 	}
 	cacher, err := dbCacheFdlimit(cfg)
 	if err != nil {

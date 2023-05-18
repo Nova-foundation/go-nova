@@ -46,13 +46,13 @@ import (
 	"github.com/ethereum/go-ethereum/trie"
 	"github.com/tyler-smith/go-bip39"
 
-	"github.com/Fantom-foundation/go-opera/evmcore"
-	"github.com/Fantom-foundation/go-opera/gossip/gasprice"
-	"github.com/Fantom-foundation/go-opera/opera"
-	"github.com/Fantom-foundation/go-opera/utils/adapters/ethdb2kvdb"
-	"github.com/Fantom-foundation/go-opera/utils/compactdb"
-	"github.com/Fantom-foundation/go-opera/utils/signers/gsignercache"
-	"github.com/Fantom-foundation/go-opera/utils/signers/internaltx"
+	"github.com/Nova-foundation/go-nova/evmcore"
+	"github.com/Nova-foundation/go-nova/gossip/gasprice"
+	"github.com/Nova-foundation/go-nova/nova"
+	"github.com/Nova-foundation/go-nova/utils/adapters/ethdb2kvdb"
+	"github.com/Nova-foundation/go-nova/utils/compactdb"
+	"github.com/Nova-foundation/go-nova/utils/signers/gsignercache"
+	"github.com/Nova-foundation/go-nova/utils/signers/internaltx"
 )
 
 var (
@@ -641,7 +641,7 @@ func (s *PublicBlockChainAPI) CurrentEpoch(ctx context.Context) hexutil.Uint64 {
 }
 
 // GetRules returns network rules for an epoch
-func (s *PublicBlockChainAPI) GetRules(ctx context.Context, epoch rpc.BlockNumber) (*opera.Rules, error) {
+func (s *PublicBlockChainAPI) GetRules(ctx context.Context, epoch rpc.BlockNumber) (*nova.Rules, error) {
 	_, es, err := s.b.GetEpochBlockState(ctx, epoch)
 	if err != nil {
 		return nil, err
@@ -973,7 +973,7 @@ func DoCall(ctx context.Context, b Backend, args TransactionArgs, blockNrOrHash 
 	if err != nil {
 		return nil, err
 	}
-	vmConfig := opera.DefaultVMConfig
+	vmConfig := nova.DefaultVMConfig
 	vmConfig.NoBaseFee = true
 	evm, vmError, err := b.GetEVM(ctx, msg, state, header, &vmConfig)
 	if err != nil {
@@ -1521,7 +1521,7 @@ func AccessList(ctx context.Context, b Backend, blockNrOrHash rpc.BlockNumberOrH
 
 		// Apply the transaction with the access list tracer
 		tracer := vm.NewAccessListTracer(accessList, args.from(), to, precompiles)
-		config := opera.DefaultVMConfig
+		config := nova.DefaultVMConfig
 		config.Tracer = tracer
 		config.Debug = true
 		config.NoBaseFee = true

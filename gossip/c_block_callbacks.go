@@ -18,14 +18,14 @@ import (
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/metrics"
 
-	"github.com/Fantom-foundation/go-opera/evmcore"
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc/verwatcher"
-	"github.com/Fantom-foundation/go-opera/gossip/emitter"
-	"github.com/Fantom-foundation/go-opera/gossip/evmstore"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/inter/iblockproc"
-	"github.com/Fantom-foundation/go-opera/opera"
-	"github.com/Fantom-foundation/go-opera/utils"
+	"github.com/Nova-foundation/go-nova/evmcore"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc/verwatcher"
+	"github.com/Nova-foundation/go-nova/gossip/emitter"
+	"github.com/Nova-foundation/go-nova/gossip/evmstore"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/inter/iblockproc"
+	"github.com/Nova-foundation/go-nova/nova"
+	"github.com/Nova-foundation/go-nova/utils"
 )
 
 var (
@@ -269,7 +269,7 @@ func consensusCallbackBeginBlockFn(
 					prevUpg := es.Rules.Upgrades
 					bs, es = sealer.SealEpoch() // TODO: refactor to not mutate the bs, it is unclear
 					if es.Rules.Upgrades != prevUpg {
-						store.AddUpgradeHeight(opera.UpgradeHeight{
+						store.AddUpgradeHeight(nova.UpgradeHeight{
 							Upgrades: es.Rules.Upgrades,
 							Height:   blockCtx.Idx + 1,
 						})
@@ -502,7 +502,7 @@ func (s *Service) RecoverEVM() {
 }
 
 // spillBlockEvents excludes first events which exceed MaxBlockGas
-func spillBlockEvents(store *Store, block *inter.Block, network opera.Rules) (*inter.Block, inter.EventPayloads) {
+func spillBlockEvents(store *Store, block *inter.Block, network nova.Rules) (*inter.Block, inter.EventPayloads) {
 	fullEvents := make(inter.EventPayloads, len(block.Events))
 	if len(block.Events) == 0 {
 		return block, fullEvents

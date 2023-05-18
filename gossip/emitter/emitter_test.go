@@ -13,14 +13,14 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/require"
 
-	"github.com/Fantom-foundation/go-opera/gossip/emitter/mock"
-	"github.com/Fantom-foundation/go-opera/integration/makefakegenesis"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/opera"
-	"github.com/Fantom-foundation/go-opera/vecmt"
+	"github.com/Nova-foundation/go-nova/gossip/emitter/mock"
+	"github.com/Nova-foundation/go-nova/integration/makefakegenesis"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/nova"
+	"github.com/Nova-foundation/go-nova/vecmt"
 )
 
-//go:generate go run github.com/golang/mock/mockgen -package=mock -destination=mock/world.go github.com/Fantom-foundation/go-opera/gossip/emitter External,TxPool,TxSigner,Signer
+//go:generate go run github.com/golang/mock/mockgen -package=mock -destination=mock/world.go github.com/Nova-foundation/go-nova/gossip/emitter External,TxPool,TxSigner,Signer
 
 func TestEmitter(t *testing.T) {
 	cfg := DefaultConfig()
@@ -61,7 +61,7 @@ func TestEmitter(t *testing.T) {
 
 	t.Run("init", func(t *testing.T) {
 		external.EXPECT().GetRules().
-			Return(opera.FakeNetRules()).
+			Return(nova.FakeNetRules()).
 			AnyTimes()
 
 		external.EXPECT().GetEpochValidators().

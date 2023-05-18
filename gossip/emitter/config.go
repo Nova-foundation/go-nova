@@ -7,8 +7,8 @@ import (
 	"github.com/Fantom-foundation/lachesis-base/inter/idx"
 	"github.com/ethereum/go-ethereum/params"
 
-	"github.com/Fantom-foundation/go-opera/inter/validatorpk"
-	"github.com/Fantom-foundation/go-opera/opera"
+	"github.com/Nova-foundation/go-nova/inter/validatorpk"
+	"github.com/Nova-foundation/go-nova/nova"
 )
 
 // EmitIntervals is the configuration of emit intervals.
@@ -71,9 +71,9 @@ func DefaultConfig() Config {
 
 		MaxParents: 0,
 
-		LimitedTpsThreshold: opera.DefaultEventGas * 120,
-		NoTxsThreshold:      opera.DefaultEventGas * 30,
-		EmergencyThreshold:  opera.DefaultEventGas * 5,
+		LimitedTpsThreshold: nova.DefaultEventGas * 120,
+		NoTxsThreshold:      nova.DefaultEventGas * 30,
+		EmergencyThreshold:  nova.DefaultEventGas * 5,
 
 		TxsCacheInvalidation: 200 * time.Millisecond,
 	}

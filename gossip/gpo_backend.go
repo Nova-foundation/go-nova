@@ -5,10 +5,10 @@ import (
 	"github.com/Fantom-foundation/lachesis-base/inter/idx"
 	"github.com/ethereum/go-ethereum/core/types"
 
-	"github.com/Fantom-foundation/go-opera/eventcheck/gaspowercheck"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/opera"
-	"github.com/Fantom-foundation/go-opera/utils/concurrent"
+	"github.com/Nova-foundation/go-nova/eventcheck/gaspowercheck"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/nova"
+	"github.com/Nova-foundation/go-nova/utils/concurrent"
 )
 
 type GPOBackend struct {
@@ -20,11 +20,11 @@ func (b *GPOBackend) GetLatestBlockIndex() idx.Block {
 	return b.store.GetLatestBlockIndex()
 }
 
-func (b *GPOBackend) GetRules() opera.Rules {
+func (b *GPOBackend) GetRules() nova.Rules {
 	return b.store.GetRules()
 }
 
-func (b *GPOBackend) GetPendingRules() opera.Rules {
+func (b *GPOBackend) GetPendingRules() nova.Rules {
 	bs, es := b.store.GetBlockEpochState()
 	if bs.DirtyRules != nil {
 		return *bs.DirtyRules

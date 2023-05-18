@@ -4,7 +4,7 @@ import (
 	"github.com/Fantom-foundation/lachesis-base/kvdb"
 	"github.com/Fantom-foundation/lachesis-base/kvdb/batched"
 
-	"github.com/Fantom-foundation/go-opera/opera/genesis"
+	"github.com/Nova-foundation/go-nova/nova/genesis"
 )
 
 // ApplyGenesis writes initial state.

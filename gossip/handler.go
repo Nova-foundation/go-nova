@@ -24,33 +24,33 @@ import (
 	"github.com/ethereum/go-ethereum/rlp"
 	"github.com/ethereum/go-ethereum/trie"
 
-	"github.com/Fantom-foundation/go-opera/eventcheck"
-	"github.com/Fantom-foundation/go-opera/eventcheck/bvallcheck"
-	"github.com/Fantom-foundation/go-opera/eventcheck/epochcheck"
-	"github.com/Fantom-foundation/go-opera/eventcheck/evallcheck"
-	"github.com/Fantom-foundation/go-opera/eventcheck/heavycheck"
-	"github.com/Fantom-foundation/go-opera/eventcheck/parentlesscheck"
-	"github.com/Fantom-foundation/go-opera/evmcore"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/blockrecords/brprocessor"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/blockrecords/brstream"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/blockrecords/brstream/brstreamleecher"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/blockrecords/brstream/brstreamseeder"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/blockvotes/bvprocessor"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/blockvotes/bvstream"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/blockvotes/bvstream/bvstreamleecher"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/blockvotes/bvstream/bvstreamseeder"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/dag/dagstream"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/dag/dagstream/dagstreamleecher"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/dag/dagstream/dagstreamseeder"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/epochpacks/epprocessor"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/epochpacks/epstream"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/epochpacks/epstream/epstreamleecher"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/epochpacks/epstream/epstreamseeder"
-	"github.com/Fantom-foundation/go-opera/gossip/protocols/snap/snapstream/snapleecher"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/inter/ibr"
-	"github.com/Fantom-foundation/go-opera/inter/ier"
-	"github.com/Fantom-foundation/go-opera/logger"
+	"github.com/Nova-foundation/go-nova/eventcheck"
+	"github.com/Nova-foundation/go-nova/eventcheck/bvallcheck"
+	"github.com/Nova-foundation/go-nova/eventcheck/epochcheck"
+	"github.com/Nova-foundation/go-nova/eventcheck/evallcheck"
+	"github.com/Nova-foundation/go-nova/eventcheck/heavycheck"
+	"github.com/Nova-foundation/go-nova/eventcheck/parentlesscheck"
+	"github.com/Nova-foundation/go-nova/evmcore"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/blockrecords/brprocessor"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/blockrecords/brstream"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/blockrecords/brstream/brstreamleecher"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/blockrecords/brstream/brstreamseeder"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/blockvotes/bvprocessor"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/blockvotes/bvstream"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/blockvotes/bvstream/bvstreamleecher"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/blockvotes/bvstream/bvstreamseeder"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/dag/dagstream"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/dag/dagstream/dagstreamleecher"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/dag/dagstream/dagstreamseeder"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/epochpacks/epprocessor"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/epochpacks/epstream"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/epochpacks/epstream/epstreamleecher"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/epochpacks/epstream/epstreamseeder"
+	"github.com/Nova-foundation/go-nova/gossip/protocols/snap/snapstream/snapleecher"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/inter/ibr"
+	"github.com/Nova-foundation/go-nova/inter/ier"
+	"github.com/Nova-foundation/go-nova/logger"
 )
 
 const (
@@ -193,8 +193,8 @@ type handler struct {
 	logger.Instance
 }
 
-// newHandler returns a new Fantom sub protocol manager. The Fantom sub protocol manages peers capable
-// with the Fantom network.
+// newHandler returns a new Nova sub protocol manager. The Nova sub protocol manages peers capable
+// with the Nova network.
 func newHandler(
 	c handlerConfig,
 ) (
@@ -700,7 +700,7 @@ func (h *handler) Start(maxPeers int) {
 }
 
 func (h *handler) Stop() {
-	log.Info("Stopping Fantom protocol")
+	log.Info("Stopping Nova protocol")
 
 	h.brLeecher.Stop()
 	h.brSeeder.Stop()
@@ -748,7 +748,7 @@ func (h *handler) Stop() {
 	h.wg.Wait()
 	h.peerWG.Wait()
 
-	log.Info("Fantom protocol stopped")
+	log.Info("Nova protocol stopped")
 }
 
 func (h *handler) myProgress() PeerProgress {
@@ -830,7 +830,7 @@ func (h *handler) handle(p *peer) error {
 		p.Log().Warn("Leecher peer registration failed", "err", err)
 		return err
 	}
-	if p.RunningCap(ProtocolName, []uint{FTM63}) {
+	if p.RunningCap(ProtocolName, []uint{NVT63}) {
 		if err := h.epLeecher.RegisterPeer(p.id); err != nil {
 			p.Log().Warn("Leecher peer registration failed", "err", err)
 			return err

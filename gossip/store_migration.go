@@ -8,9 +8,9 @@ import (
 	"github.com/Fantom-foundation/lachesis-base/kvdb"
 	"github.com/ethereum/go-ethereum/common"
 
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/inter/iblockproc"
-	"github.com/Fantom-foundation/go-opera/utils/migration"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/inter/iblockproc"
+	"github.com/Nova-foundation/go-nova/utils/migration"
 )
 
 func isEmptyDB(db kvdb.Iteratee) bool {
@@ -33,7 +33,7 @@ func (s *Store) migrateData() error {
 
 func (s *Store) migrations() *migration.Migration {
 	return migration.
-		Begin("opera-gossip-store").
+		Begin("nova-gossip-store").
 		Next("used gas recovery", unsupportedMigration).
 		Next("tx hashes recovery", unsupportedMigration).
 		Next("DAG heads recovery", unsupportedMigration).

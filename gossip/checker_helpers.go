@@ -6,10 +6,10 @@ import (
 	"github.com/Fantom-foundation/lachesis-base/inter/idx"
 	"github.com/Fantom-foundation/lachesis-base/inter/pos"
 
-	"github.com/Fantom-foundation/go-opera/eventcheck/gaspowercheck"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/inter/validatorpk"
-	"github.com/Fantom-foundation/go-opera/opera"
+	"github.com/Nova-foundation/go-nova/eventcheck/gaspowercheck"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/inter/validatorpk"
+	"github.com/Nova-foundation/go-nova/nova"
 )
 
 // GasPowerCheckReader is a helper to run gas power check
@@ -23,7 +23,7 @@ func (r *GasPowerCheckReader) GetValidationContext() *gaspowercheck.ValidationCo
 }
 
 // NewGasPowerContext reads current validation context for gaspowercheck
-func NewGasPowerContext(s *Store, validators *pos.Validators, epoch idx.Epoch, cfg opera.EconomyRules) *gaspowercheck.ValidationContext {
+func NewGasPowerContext(s *Store, validators *pos.Validators, epoch idx.Epoch, cfg nova.EconomyRules) *gaspowercheck.ValidationContext {
 	// engineMu is locked here
 
 	short := cfg.ShortGasPower

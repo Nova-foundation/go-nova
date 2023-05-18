@@ -10,8 +10,8 @@ import (
 	"github.com/Fantom-foundation/lachesis-base/lachesis"
 	"github.com/ethereum/go-ethereum/rlp"
 
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/opera"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/nova"
 )
 
 type ValidatorBlockState struct {
@@ -52,7 +52,7 @@ type BlockState struct {
 	ValidatorStates       []ValidatorBlockState
 	NextValidatorProfiles ValidatorProfiles
 
-	DirtyRules *opera.Rules `rlp:"nil"` // nil means that there's no changes compared to epoch rules
+	DirtyRules *nova.Rules `rlp:"nil"` // nil means that there's no changes compared to epoch rules
 
 	AdvanceEpochs idx.Epoch
 }
@@ -99,7 +99,7 @@ type EpochStateV1 struct {
 	ValidatorStates   []ValidatorEpochState
 	ValidatorProfiles ValidatorProfiles
 
-	Rules opera.Rules
+	Rules nova.Rules
 }
 
 type EpochState EpochStateV1
@@ -147,7 +147,7 @@ func (es EpochState) Copy() EpochState {
 	cp.ValidatorStates = make([]ValidatorEpochState, len(es.ValidatorStates))
 	copy(cp.ValidatorStates, es.ValidatorStates)
 	cp.ValidatorProfiles = es.ValidatorProfiles.Copy()
-	if es.Rules != (opera.Rules{}) {
+	if es.Rules != (nova.Rules{}) {
 		cp.Rules = es.Rules.Copy()
 	}
 	return cp

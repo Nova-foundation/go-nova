@@ -13,21 +13,21 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/rlp"
 
-	"github.com/Fantom-foundation/go-opera/evmcore"
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc"
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc/drivermodule"
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc/eventmodule"
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc/evmmodule"
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc/sealmodule"
-	"github.com/Fantom-foundation/go-opera/gossip/evmstore"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/inter/iblockproc"
-	"github.com/Fantom-foundation/go-opera/inter/ibr"
-	"github.com/Fantom-foundation/go-opera/inter/ier"
-	"github.com/Fantom-foundation/go-opera/opera"
-	"github.com/Fantom-foundation/go-opera/opera/genesis"
-	"github.com/Fantom-foundation/go-opera/opera/genesisstore"
-	"github.com/Fantom-foundation/go-opera/utils/iodb"
+	"github.com/Nova-foundation/go-nova/evmcore"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc/drivermodule"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc/eventmodule"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc/evmmodule"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc/sealmodule"
+	"github.com/Nova-foundation/go-nova/gossip/evmstore"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/inter/iblockproc"
+	"github.com/Nova-foundation/go-nova/inter/ibr"
+	"github.com/Nova-foundation/go-nova/inter/ier"
+	"github.com/Nova-foundation/go-nova/nova"
+	"github.com/Nova-foundation/go-nova/nova/genesis"
+	"github.com/Nova-foundation/go-nova/nova/genesisstore"
+	"github.com/Nova-foundation/go-nova/utils/iodb"
 )
 
 type GenesisBuilder struct {
@@ -141,7 +141,7 @@ func (b *GenesisBuilder) ExecuteGenesisTxs(blockProc BlockProc, genesisTxs types
 	txListener := blockProc.TxListenerModule.Start(blockCtx, bs, es, b.tmpStateDB)
 	evmProcessor := blockProc.EVMModule.Start(blockCtx, b.tmpStateDB, dummyHeaderReturner{}, func(l *types.Log) {
 		txListener.OnNewLog(l)
-	}, es.Rules, es.Rules.EvmChainConfig([]opera.UpgradeHeight{
+	}, es.Rules, es.Rules.EvmChainConfig([]nova.UpgradeHeight{
 		{
 			Upgrades: es.Rules.Upgrades,
 			Height:   0,

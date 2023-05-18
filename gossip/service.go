@@ -28,31 +28,31 @@ import (
 	"github.com/ethereum/go-ethereum/p2p/enr"
 	"github.com/ethereum/go-ethereum/rpc"
 
-	"github.com/Fantom-foundation/go-opera/ethapi"
-	"github.com/Fantom-foundation/go-opera/eventcheck"
-	"github.com/Fantom-foundation/go-opera/eventcheck/basiccheck"
-	"github.com/Fantom-foundation/go-opera/eventcheck/epochcheck"
-	"github.com/Fantom-foundation/go-opera/eventcheck/gaspowercheck"
-	"github.com/Fantom-foundation/go-opera/eventcheck/heavycheck"
-	"github.com/Fantom-foundation/go-opera/eventcheck/parentscheck"
-	"github.com/Fantom-foundation/go-opera/evmcore"
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc"
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc/drivermodule"
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc/eventmodule"
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc/evmmodule"
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc/sealmodule"
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc/verwatcher"
-	"github.com/Fantom-foundation/go-opera/gossip/emitter"
-	"github.com/Fantom-foundation/go-opera/gossip/filters"
-	"github.com/Fantom-foundation/go-opera/gossip/gasprice"
-	"github.com/Fantom-foundation/go-opera/gossip/proclogger"
-	snapsync "github.com/Fantom-foundation/go-opera/gossip/protocols/snap"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/logger"
-	"github.com/Fantom-foundation/go-opera/utils/signers/gsignercache"
-	"github.com/Fantom-foundation/go-opera/utils/wgmutex"
-	"github.com/Fantom-foundation/go-opera/valkeystore"
-	"github.com/Fantom-foundation/go-opera/vecmt"
+	"github.com/Nova-foundation/go-nova/ethapi"
+	"github.com/Nova-foundation/go-nova/eventcheck"
+	"github.com/Nova-foundation/go-nova/eventcheck/basiccheck"
+	"github.com/Nova-foundation/go-nova/eventcheck/epochcheck"
+	"github.com/Nova-foundation/go-nova/eventcheck/gaspowercheck"
+	"github.com/Nova-foundation/go-nova/eventcheck/heavycheck"
+	"github.com/Nova-foundation/go-nova/eventcheck/parentscheck"
+	"github.com/Nova-foundation/go-nova/evmcore"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc/drivermodule"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc/eventmodule"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc/evmmodule"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc/sealmodule"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc/verwatcher"
+	"github.com/Nova-foundation/go-nova/gossip/emitter"
+	"github.com/Nova-foundation/go-nova/gossip/filters"
+	"github.com/Nova-foundation/go-nova/gossip/gasprice"
+	"github.com/Nova-foundation/go-nova/gossip/proclogger"
+	snapsync "github.com/Nova-foundation/go-nova/gossip/protocols/snap"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/logger"
+	"github.com/Nova-foundation/go-nova/utils/signers/gsignercache"
+	"github.com/Nova-foundation/go-nova/utils/wgmutex"
+	"github.com/Nova-foundation/go-nova/valkeystore"
+	"github.com/Nova-foundation/go-nova/vecmt"
 )
 
 type ServiceFeed struct {
@@ -141,8 +141,8 @@ type Service struct {
 	// application protocol
 	handler *handler
 
-	operaDialCandidates enode.Iterator
-	snapDialCandidates  enode.Iterator
+	novaDialCandidates enode.Iterator
+	snapDialCandidates enode.Iterator
 
 	EthAPI        *EthAPIBackend
 	netRPCService *ethapi.PublicNetAPI
@@ -234,7 +234,7 @@ func newService(config Config, store *Store, blockProc BlockProc, engine lachesi
 	// init dialCandidates
 	dnsclient := dnsdisc.NewClient(dnsdisc.Config{})
 	var err error
-	svc.operaDialCandidates, err = dnsclient.NewIterator(config.OperaDiscoveryURLs...)
+	svc.novaDialCandidates, err = dnsclient.NewIterator(config.NovaDiscoveryURLs...)
 	if err != nil {
 		return nil, err
 	}
@@ -346,7 +346,7 @@ func (s *Service) RegisterEmitter(em *emitter.Emitter) {
 	s.emitters = append(s.emitters, em)
 }
 
-// MakeProtocols constructs the P2P protocol definitions for `opera`.
+// MakeProtocols constructs the P2P protocol definitions for `nova`.
 func MakeProtocols(svc *Service, backend *handler, disc enode.Iterator) []p2p.Protocol {
 	protocols := make([]p2p.Protocol, len(ProtocolVersions))
 	for i, version := range ProtocolVersions {
@@ -390,7 +390,7 @@ func MakeProtocols(svc *Service, backend *handler, disc enode.Iterator) []p2p.Pr
 // Protocols returns protocols the service can communicate on.
 func (s *Service) Protocols() []p2p.Protocol {
 	protos := append(
-		MakeProtocols(s, s.handler, s.operaDialCandidates),
+		MakeProtocols(s, s.handler, s.novaDialCandidates),
 		snap.MakeProtocols((*snapHandler)(s.handler), s.snapDialCandidates)...)
 	return protos
 }
@@ -474,14 +474,14 @@ func (s *Service) WaitBlockEnd() {
 
 // Stop method invoked when the node terminates the service.
 func (s *Service) Stop() error {
-	defer log.Info("Fantom service stopped")
+	defer log.Info("Nova service stopped")
 	s.verWatcher.Stop()
 	for _, em := range s.emitters {
 		em.Stop()
 	}
 
 	// Stop all the peer-related stuff first.
-	s.operaDialCandidates.Close()
+	s.novaDialCandidates.Close()
 	s.snapDialCandidates.Close()
 
 	s.handler.Stop()

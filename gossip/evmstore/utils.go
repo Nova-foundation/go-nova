@@ -17,7 +17,7 @@ import (
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/rlp"
 
-	"github.com/Fantom-foundation/go-opera/utils/iodb"
+	"github.com/Nova-foundation/go-nova/utils/iodb"
 )
 
 var (

@@ -23,14 +23,14 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/Fantom-foundation/go-opera/eventcheck"
-	"github.com/Fantom-foundation/go-opera/eventcheck/epochcheck"
-	"github.com/Fantom-foundation/go-opera/evmcore"
-	"github.com/Fantom-foundation/go-opera/gossip/contract/ballot"
-	"github.com/Fantom-foundation/go-opera/gossip/filters"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/inter/ibr"
-	"github.com/Fantom-foundation/go-opera/inter/ier"
+	"github.com/Nova-foundation/go-nova/eventcheck"
+	"github.com/Nova-foundation/go-nova/eventcheck/epochcheck"
+	"github.com/Nova-foundation/go-nova/evmcore"
+	"github.com/Nova-foundation/go-nova/gossip/contract/ballot"
+	"github.com/Nova-foundation/go-nova/gossip/filters"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/inter/ibr"
+	"github.com/Nova-foundation/go-nova/inter/ier"
 )
 
 type IntegrationTestSuite struct {

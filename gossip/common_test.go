@@ -25,18 +25,18 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/log"
 
-	"github.com/Fantom-foundation/go-opera/evmcore"
-	"github.com/Fantom-foundation/go-opera/gossip/blockproc"
-	"github.com/Fantom-foundation/go-opera/gossip/emitter"
-	"github.com/Fantom-foundation/go-opera/integration/makefakegenesis"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/inter/iblockproc"
-	"github.com/Fantom-foundation/go-opera/inter/validatorpk"
-	"github.com/Fantom-foundation/go-opera/opera"
-	"github.com/Fantom-foundation/go-opera/utils"
-	"github.com/Fantom-foundation/go-opera/utils/adapters/vecmt2dagidx"
-	"github.com/Fantom-foundation/go-opera/valkeystore"
-	"github.com/Fantom-foundation/go-opera/vecmt"
+	"github.com/Nova-foundation/go-nova/evmcore"
+	"github.com/Nova-foundation/go-nova/gossip/blockproc"
+	"github.com/Nova-foundation/go-nova/gossip/emitter"
+	"github.com/Nova-foundation/go-nova/integration/makefakegenesis"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/inter/iblockproc"
+	"github.com/Nova-foundation/go-nova/inter/validatorpk"
+	"github.com/Nova-foundation/go-nova/nova"
+	"github.com/Nova-foundation/go-nova/utils"
+	"github.com/Nova-foundation/go-nova/utils/adapters/vecmt2dagidx"
+	"github.com/Nova-foundation/go-nova/valkeystore"
+	"github.com/Nova-foundation/go-nova/vecmt"
 )
 
 const (
@@ -131,11 +131,11 @@ func (m testConfirmedEventsModule) Start(bs iblockproc.BlockState, es iblockproc
 }
 
 func newTestEnv(firstEpoch idx.Epoch, validatorsNum idx.Validator) *testEnv {
-	rules := opera.FakeNetRules()
+	rules := nova.FakeNetRules()
 	rules.Epochs.MaxEpochDuration = inter.Timestamp(maxEpochDuration)
 	rules.Blocks.MaxEmptyBlockSkipPeriod = 0
 
-	genStore := makefakegenesis.FakeGenesisStoreWithRulesAndStart(validatorsNum, utils.ToFtm(genesisBalance), utils.ToFtm(genesisStake), rules, firstEpoch, 2)
+	genStore := makefakegenesis.FakeGenesisStoreWithRulesAndStart(validatorsNum, utils.ToNvt(genesisBalance), utils.ToNvt(genesisStake), rules, firstEpoch, 2)
 	genesis := genStore.Genesis()
 
 	store := NewMemStore()
@@ -454,7 +454,7 @@ func (env *testEnv) callContract(
 	// about the transaction and calling mechanisms.
 	txContext := evmcore.NewEVMTxContext(msg)
 	context := evmcore.NewEVMBlockContext(block.Header(), env.GetEvmStateReader(), nil)
-	vmenv := vm.NewEVM(context, txContext, state, env.store.GetEvmChainConfig(), opera.DefaultVMConfig)
+	vmenv := vm.NewEVM(context, txContext, state, env.store.GetEvmChainConfig(), nova.DefaultVMConfig)
 	gaspool := new(evmcore.GasPool).AddGas(math.MaxUint64)
 	res, err := evmcore.NewStateTransition(vmenv, msg, gaspool).TransitionDb()
 

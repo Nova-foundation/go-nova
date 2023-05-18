@@ -9,13 +9,13 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 
-	"github.com/Fantom-foundation/go-opera/eventcheck"
-	"github.com/Fantom-foundation/go-opera/gossip/evmstore"
-	"github.com/Fantom-foundation/go-opera/inter"
-	"github.com/Fantom-foundation/go-opera/inter/iblockproc"
-	"github.com/Fantom-foundation/go-opera/inter/ibr"
-	"github.com/Fantom-foundation/go-opera/inter/ier"
-	"github.com/Fantom-foundation/go-opera/opera"
+	"github.com/Nova-foundation/go-nova/eventcheck"
+	"github.com/Nova-foundation/go-nova/gossip/evmstore"
+	"github.com/Nova-foundation/go-nova/inter"
+	"github.com/Nova-foundation/go-nova/inter/iblockproc"
+	"github.com/Nova-foundation/go-nova/inter/ibr"
+	"github.com/Nova-foundation/go-nova/inter/ier"
+	"github.com/Nova-foundation/go-nova/nova"
 )
 
 var errValidatorNotExist = errors.New("validator does not exist")
@@ -242,7 +242,7 @@ func (s *Store) WriteFullEpochRecord(er ier.LlrIdxFullEpochRecord) {
 
 func (s *Store) WriteUpgradeHeight(bs iblockproc.BlockState, es iblockproc.EpochState, prevEs *iblockproc.EpochState) {
 	if prevEs == nil || es.Rules.Upgrades != prevEs.Rules.Upgrades {
-		s.AddUpgradeHeight(opera.UpgradeHeight{
+		s.AddUpgradeHeight(nova.UpgradeHeight{
 			Upgrades: es.Rules.Upgrades,
 			Height:   bs.LastBlock.Idx + 1,
 		})

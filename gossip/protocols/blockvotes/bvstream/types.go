@@ -9,7 +9,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/rlp"
 
-	"github.com/Fantom-foundation/lachesis-base/gossip/basestream"
+	"github.com/Nova-foundation/lachesis-base/gossip/basestream"
 )
 
 type Request struct {

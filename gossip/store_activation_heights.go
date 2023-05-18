@@ -1,26 +1,26 @@
 package gossip
 
 import (
-	"github.com/Fantom-foundation/go-opera/opera"
+	"github.com/Nova-foundation/go-nova/nova"
 )
 
-func (s *Store) AddUpgradeHeight(h opera.UpgradeHeight) {
+func (s *Store) AddUpgradeHeight(h nova.UpgradeHeight) {
 	orig := s.GetUpgradeHeights()
 	// allocate new memory to avoid race condition in cache
-	cp := make([]opera.UpgradeHeight, 0, len(orig)+1)
+	cp := make([]nova.UpgradeHeight, 0, len(orig)+1)
 	cp = append(append(cp, orig...), h)
 
 	s.rlp.Set(s.table.UpgradeHeights, []byte{}, cp)
 	s.cache.UpgradeHeights.Store(cp)
 }
 
-func (s *Store) GetUpgradeHeights() []opera.UpgradeHeight {
+func (s *Store) GetUpgradeHeights() []nova.UpgradeHeight {
 	if v := s.cache.UpgradeHeights.Load(); v != nil {
-		return v.([]opera.UpgradeHeight)
+		return v.([]nova.UpgradeHeight)
 	}
-	hh, ok := s.rlp.Get(s.table.UpgradeHeights, []byte{}, &[]opera.UpgradeHeight{}).(*[]opera.UpgradeHeight)
+	hh, ok := s.rlp.Get(s.table.UpgradeHeights, []byte{}, &[]nova.UpgradeHeight{}).(*[]nova.UpgradeHeight)
 	if !ok {
-		return []opera.UpgradeHeight{}
+		return []nova.UpgradeHeight{}
 	}
 	s.cache.UpgradeHeights.Store(*hh)
 	return *hh

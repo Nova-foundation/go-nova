@@ -8,7 +8,7 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/Fantom-foundation/go-opera/logger"
+	"github.com/Nova-foundation/go-nova/logger"
 )
 
 func equalStorageReceipts(t *testing.T, expect, got []*types.ReceiptForStorage) {

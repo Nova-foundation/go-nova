@@ -12,9 +12,9 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/Fantom-foundation/go-opera/gossip/contract/ballot"
-	"github.com/Fantom-foundation/go-opera/logger"
-	"github.com/Fantom-foundation/go-opera/utils"
+	"github.com/Nova-foundation/go-nova/gossip/contract/ballot"
+	"github.com/Nova-foundation/go-nova/logger"
+	"github.com/Nova-foundation/go-nova/utils"
 )
 
 func BenchmarkBallotTxsProcessing(b *testing.B) {
@@ -57,7 +57,7 @@ func BenchmarkBallotTxsProcessing(b *testing.B) {
 
 		// Init accounts
 		for vid := idx.ValidatorID(2); vid <= count; vid++ {
-			tx := env.Transfer(1, vid, utils.ToFtm(10))
+			tx := env.Transfer(1, vid, utils.ToNvt(10))
 			txs = append(txs, tx)
 			if len(txs) > 2 {
 				flushTxs()

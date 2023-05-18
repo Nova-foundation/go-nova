@@ -28,7 +28,7 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	lru "github.com/hashicorp/golang-lru"
 
-	"github.com/Fantom-foundation/go-opera/opera"
+	"github.com/Nova-foundation/go-nova/nova"
 
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/params"
@@ -54,8 +54,8 @@ type Config struct {
 type Reader interface {
 	GetLatestBlockIndex() idx.Block
 	TotalGasPowerLeft() uint64
-	GetRules() opera.Rules
-	GetPendingRules() opera.Rules
+	GetRules() nova.Rules
+	GetPendingRules() nova.Rules
 	PendingTxs() types.Transactions
 }
 
